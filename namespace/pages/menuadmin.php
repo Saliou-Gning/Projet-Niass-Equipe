@@ -129,8 +129,7 @@
 
 
 
-	            		$db = new PDO('mysql:host=localhost;dbname=BDLocation', 'root', 'passer');
-						$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+	            		include 'db.php';
 
 						$gestion = new gestionProprietaire($db);
 
