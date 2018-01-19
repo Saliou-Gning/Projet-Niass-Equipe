@@ -95,8 +95,7 @@
 			<div class="col-7">
 				<?php
 
-					$db = new PDO('mysql:host=localhost;dbname=BDLocation', 'root', 'passer');
-					$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+					
 					$gestion = new gestionProprietaire($db);
 
 					echo "<center><h1>Liste des propriétaires</h1></center>";
