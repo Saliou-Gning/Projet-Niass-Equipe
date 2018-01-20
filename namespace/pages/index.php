@@ -77,6 +77,14 @@
 				$sql = $this->_bdd->query("SELECT * FROM Proprietaire");
 				return $sql;
 			}
+
+			public function listerPagination($deb){
+				if ($deb<0) {
+					$deb=0;
+				}
+				$sql = $this->_bdd->query("SELECT * FROM Proprietaire LIMIT ".$deb.",4");
+				return $sql;
+			}
 		}
 
 		//Classe bien 

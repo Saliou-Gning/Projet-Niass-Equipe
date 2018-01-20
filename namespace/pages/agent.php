@@ -95,27 +95,40 @@
 			<div class="col-7">
 				
 
-					 <center><h1>Liste des propriétaires</h1></center>
-					 <table class='table table-bordered bg-light'>
-						 <thead class='thead-dark'>
-							 <th scope='col'>Numéro de piéce</th>
-							 <th scope='col'>Nom</th>
-							 <th scope='col'>Numéro de tel</th>
-							 <th scope='col'>Action</th>
-						 </thead>
+					<center><h1>Liste des propriétaires</h1></center>
+					<table class='table table-bordered bg-light'>
+						<thead class='thead-dark'>
+							<th scope='col'>Numéro de piéce</th>
+							<th scope='col'>Nom</th>
+							<th scope='col'>Numéro de tel</th>
+							<th scope='col'>Action</th>
+						</thead>
 				<?php
 
-					
 					$gestion = new gestionProprietaire($db);
-					$liste = $gestion->lister();
+
+					if (isset($suivant)) {
+						$max=$gestion->lister()->rowCount();
+						if ($page+4>=$max-4) {
+							$page=$max-3;
+						}else
+							$page+=3;
+					}elseif(isset($previous)) {
+						$page-=3;
+					}
+					else
+						$page = 0;
+					
+					
+					$liste = $gestion->listerPagination($page);
 
 					while ($donnee=$liste->fetch()) {
 				?>
 						<tr>
-							 <td><?php echo $donnee['numPiece']; ?> </td>
-							 <td><?php echo $donnee['Nom']; ?></td>
-							 <td><?php echo $donnee['tel']; ?></td>
-							 <td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#<?php echo($donnee['id']); ?>">Update</button></td>
+							<td><?php echo $donnee['numPiece']; ?> </td>
+							<td><?php echo $donnee['Nom']; ?></td>
+							<td><?php echo $donnee['tel']; ?></td>
+							<td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#<?php echo($donnee['id']); ?>">Update</button></td>
 							 <div class="modal fade" id="<?php echo($donnee['id']); ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							    <div class="modal-dialog" role="document">
 							      <div class="modal-content"  style="background: rgba(   244, 246, 247 );">
@@ -145,10 +158,12 @@
 							      </div>
 							    </div>
 							</div>
-						 </tr>
-					<?php } ?>
+						</tr>
+				<?php 
+					} 
+				?>
 					
-					 </table>
+					</table>
 				
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Nouveau</button>
   
@@ -184,8 +199,17 @@
 				      </div>
 				    </div>
 				</div>
-
+				<p></p>
 				
+				<form method="POST" class="form-group">
+					<center>
+						<input type="hidden" name="page" value="<?php echo $page; ?>">
+						<input type="submit" class="btn btn-primary" name="suivant" value="Suivant">
+						<input type="submit" class="btn btn-primary" name="previous" value="Précédent">
+					</center>
+				</form>
+				
+					
 			</div>
 		</div>
 		<center>
