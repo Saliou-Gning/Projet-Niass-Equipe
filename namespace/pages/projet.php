@@ -14,16 +14,45 @@
 
 			public function update(){
 				//permet de modifier le tel d'un propriétaire
+				$this->getConnexion();
+				// requete a executer
+			   $sql= "select * from Proprietaire where tel='$tel'";
+				// preparation de la requete
+				$donnees = $this->bdd->query($sql);
+				return $donnees;
 			}
 
 			public function find(){
 				//rechercher un propriétaire à travers son CNI
+				$this->getConnexion();
+				$sql="select * from Proprietaire where numPiece='$numPiece'";
+				$donnees = $this->bdd->query($sql);
+				return $donnees;
 			}
+		}
 
 			//méthode lister qui retourne la liste des propriétaire
-
-
-		}
+			
+		 function lister(){
+			$sql = $this->_bdd->query("SELECT * FROM Proprietaire");
+			echo "<table border:'1'>";
+			echo "<tr>";
+				echo "<th>id</th>";
+				echo "<th>numPiece</th>";
+				echo "<th>Nom</th>";
+				echo "<th>tel</th>";
+			echo "</tr>";
+			while ($res = $sql->fetch()) {
+				echo "<tr>";
+					echo "<td>".$res['id']."</td>";
+					echo "<td>".$res['numPiece']."</td>";
+					echo "<td>".$res['Nom']."</td>";
+					echo "<td>".$res['tel']."</td>";
+					
+				echo "</tr>";
+			}
+			echo "</table>";
+		 }
 
 		//Classe bien 
 
@@ -35,6 +64,7 @@
 			private $_commission;
 			private $_idTypeBien;
 			private $_idProprietaire;
+		
 
 
 			//methode qui enregistre un bien et son propiétaire s'il n'existe pas
