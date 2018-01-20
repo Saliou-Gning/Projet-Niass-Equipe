@@ -341,6 +341,11 @@
 				return $sql;
 			}
 
+			public function listerPagination($deb, $fin){
+				$sql = $this->_bdd->query("SELECT * FROM utilisateur LIMIT ".$deb.",".$fin." ");
+				return $sql;
+			}
+
 			//methode logon qui permet de se loger qui aura en paramétre (login et mot de passe) et qui retourne l'utilisateur.
 
 			public function connexion($login, $pw){

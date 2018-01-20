@@ -93,29 +93,30 @@
 				
 			</div>
 			<div class="col-7">
+				
+
+					 <center><h1>Liste des propriétaires</h1></center>
+					 <table class='table table-bordered bg-light'>
+						 <thead class='thead-dark'>
+							 <th scope='col'>Numéro de piéce</th>
+							 <th scope='col'>Nom</th>
+							 <th scope='col'>Numéro de tel</th>
+							 <th scope='col'>Action</th>
+						 </thead>
 				<?php
 
 					
 					$gestion = new gestionProprietaire($db);
-
-					echo "<center><h1>Liste des propriétaires</h1></center>";
-					echo "<table class='table table-bordered bg-light'>";
-						echo "<thead class='thead-dark'>";
-							echo "<th scope='col'>Numéro de piéce</th>";
-							echo "<th scope='col'>Nom</th>";
-							echo "<th scope='col'>Numéro de tel</th>";
-							echo "<th scope='col'>Action</th>";
-						echo "</thead>";
-
 					$liste = $gestion->lister();
 
 					while ($donnee=$liste->fetch()) {
-						echo "<tr>";
-							echo "<td>".$donnee['numPiece']."</td>";
-							echo "<td>".$donnee['Nom']."</td>";
-							echo "<td>".$donnee['tel']."</td>";
-							echo '<td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#'.$donnee['id'].'">Update</button></td>';
-							echo '<div class="modal fade" id="'.$donnee['id'].'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				?>
+						<tr>
+							 <td><?php echo $donnee['numPiece']; ?> </td>
+							 <td><?php echo $donnee['Nom']; ?></td>
+							 <td><?php echo $donnee['tel']; ?></td>
+							 <td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#<?php echo($donnee['id']); ?>">Update</button></td>
+							 <div class="modal fade" id="<?php echo($donnee['id']); ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							    <div class="modal-dialog" role="document">
 							      <div class="modal-content"  style="background: rgba(   244, 246, 247 );">
 							        <div class="modal-header">
@@ -128,8 +129,8 @@
 							          <form method="POST">
 										<div class="form-group">
 										    <label for=""><B>Proprietaire à modifier</B></label>
-										    <input type="text" class="form-control" value='.$donnee['Nom'].' name="nomComplet" placeholder="Entrer son login" readonly>
-										    <input type="text" class="form-control" value='.$donnee['id'].' id="recup" name="id">
+										    <input type="text" class="form-control" value='<?php echo($donnee['Nom']); ?>' name="nomComplet" placeholder="Entrer son login" readonly>
+										    <input type="text" class="form-control" value='<?php echo($donnee['id']); ?>' id="recup" name="id">
 										</div>
 										<div class="form-group"><B>Nouveau numéro de tel</B>
 										    <label for=""></label>
@@ -143,11 +144,12 @@
 							        </div>
 							      </div>
 							    </div>
-							</div>';
-						echo "</tr>";
-					}
-					echo "</table>";
-				?>
+							</div>
+						 </tr>
+					<?php } ?>
+					
+					 </table>
+				
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Nouveau</button>
   
 				<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -186,6 +188,82 @@
 				
 			</div>
 		</div>
+		<center>
+			<br><br>
+			<h1 id="recherche" class="text-light"><i>Rechercher de propriétaire</i></h1>
+			<form method="POST" action="agent.php#recherche">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="cni"  placeholder="Entrez le cni du propriétaire" style="width: 250px;"><br>
+                    <button type="submit" class="btn btn-secondary" name="recherche">Rechercher</button>
+                </div>
+            </form>
+	        <div style="width: 700px;">
+	        	<?php
+	            	extract($_POST);
+	            	if (isset($recherche)) {
+
+
+						$gestion = new gestionProprietaire($db);
+
+						if ($cni!="") {
+							$p = $gestion->find($cni);
+							if ($donnee = $p->fetch()) {
+				?>
+								<table class='table table-bordered bg-light'>
+									<thead class='thead-dark'>";
+										<th scope='col'>Numéro de piéce</th>
+										<th scope='col'>Nom</th>
+										<th scope='col'>Numéro de téléphone</th>
+										<th scope='col'>Action</th>
+									</thead>
+
+									<tr>
+										<td><?php echo $donnee['numPiece']; ?></td>
+										<td><?php echo $donnee['Nom']; ?></td>
+										<td><?php echo $donnee['tel']; ?></td>
+										<td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#<?php echo($donnee['id']); ?>">Update</button></td>
+
+											 <div class="modal fade" id="<?php echo($donnee['id']); ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											    <div class="modal-dialog" role="document">
+											      <div class="modal-content"  style="background: rgba(   244, 246, 247 );">
+											        <div class="modal-header">
+											          <h1 class="modal-title text-primary" id="exampleModalLabel">Modification</h1>
+											          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											            <span aria-hidden="true">&times;</span>
+											          </button>
+											        </div>
+											        <div class="modal-body">
+											          <form method="POST">
+														<div class="form-group">
+														    <label for=""><B>Proprietaire à modifier</B></label>
+														    <input type="text" class="form-control" value='<?php echo($donnee['Nom']); ?>' name="nomComplet" placeholder="Entrer son login" readonly>
+														    <input type="text" class="form-control" value='<?php echo($donnee['id']); ?>' id="recup" name="id">
+														</div>
+														<div class="form-group"><B>Nouveau numéro de tel</B>
+														    <label for=""></label>
+														    <input type="text" class="form-control" name="tel" placeholder="Entrer son mot de passe">
+														</div>
+											           <center> <button type="submit" name="modifier" class="btn btn-primary">Modifier</button></center>
+											          </form>
+											        </div>
+											        <div class="modal-footer">
+											          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+											        </div>
+											      </div>
+											    </div>
+											</div>
+									</tr>
+								</table>
+				<?php 
+							}else
+								echo "<span class='alert alert-danger'>Ce propriétaire n'est pas encore ajouté</span>";;
+						}
+							
+	            	}
+	            ?>
+	        </div>
+	        <br><br><br>
+		</center>
 	</div>
 </body>
 </html>

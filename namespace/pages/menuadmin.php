@@ -55,7 +55,7 @@
 			    <form method="POST" action="" class="form-inline my-2 my-lg-0">
 			      	
 			    </form>
-			    <button class="btn btn-danger my-2 my-sm-0" id="deconnect">Déconnexion</button>
+			    <input type="button" class="btn btn-danger my-2 my-sm-0" id="deconnect" value="Déconnexion">
 			</div>
 		</nav>
 			<br>
@@ -114,73 +114,12 @@
 			
 		</div>
 		<br>
-		<center>
-			<h1><i>Rechercher de propriétaire</i></h1>
-			<form method="POST" action="">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="cni"  placeholder="Entrez le cni du propriétaire" style="width: 250px;"><br>
-                    <button type="submit" class="btn btn-secondary" name="recherche">Rechercher</button>
-                </div>
-            </form>
-	        <div style="width: 700px;">
-	        	<?php
-	            	extract($_POST);
-	            	if (isset($recherche)) {
-
-
-
-	            		include 'db.php';
-
-						$gestion = new gestionProprietaire($db);
-
-						if ($cni=="") {
-							echo "<table class='table table-bordered bg-light'>";
-								echo "<thead class='thead-dark'>";
-									echo "<th scope='col'>Numéro de piéce</th>";
-									echo "<th scope='col'>Nom</th>";
-									echo "<th scope='col'>Numéro de téléphone</th>";
-								echo "</thead>";
-
-							$liste = $gestion->lister();
-
-							while ($donnee=$liste->fetch()) {
-								echo "<tr>";
-									echo "<td>".$donnee['numPiece']."</td>";
-									echo "<td>".$donnee['Nom']."</td>";
-									echo "<td>".$donnee['tel']."</td>";
-								echo "</tr>";
-							}
-							echo "</table>";
-						}else{
-							$p = $gestion->find($cni);
-							if ($donnee = $p->fetch()) {
-								echo "<table class='table table-bordered bg-light'>";
-									echo "<thead class='thead-dark'>";
-										echo "<th scope='col'>Numéro de piéce</th>";
-										echo "<th scope='col'>Nom</th>";
-										echo "<th scope='col'>Numéro de téléphone</th>";
-									echo "</thead>";
-
-									echo "<tr>";
-										echo "<td>".$donnee['numPiece']."</td>";
-										echo "<td>".$donnee['Nom']."</td>";
-										echo "<td>".$donnee['tel']."</td>";
-									echo "</tr>";
-								echo "</table>";
-							}else
-								echo "<span class='alert alert-danger'>Ce propriétaire n'est pas encore ajouté</span>";;
-						}
-							
-	            	}
-	            ?>
-	        </div>
-	        <br><br><br>
-		</center>
+		
 	</div>
-<script type="text/javascript" src="../js/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
-<script type="text/javascript" src="../js/script.js"></script>
+	<script type="text/javascript" src="../js/script.js"></script>
 </body>
 </html>

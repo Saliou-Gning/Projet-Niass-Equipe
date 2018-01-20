@@ -3,6 +3,11 @@
 <head>
     <title></title>
 </head>
+<style type="text/css">
+    button{
+        width: 100px;
+    }
+</style>
 <body>
 <?php
 
@@ -41,9 +46,9 @@
                     else
                         echo "<td>Bloqué</td>";
                     if ($donne['etat']==1)
-                        echo "<td> <a href='#' class='etat' id='".$donne['id']."'>Bloquer</a> | <a class='supprimer' id='".$donne['id']."' href='#'>Supprimer</a></td>";
+                        echo "<td> <button href='#' class='etat btn btn-secondary' id='".$donne['id']."'>Bloquer</button>  <button class='supprimer btn btn-danger' id='".$donne['id']."' href='#'>Supprimer</button></td>";
                     else
-                        echo "<td> <a class='etat' id='".$donne['id']."' href='#'>Activer</a> | <a class='supprimer' id='".$donne['id']."' href='#'>Supprimer</a></td>";
+                        echo "<td> <button class='etat btn btn-secondary' id='".$donne['id']."' href='#'>Activer</button>  <a class='supprimer btn btn-danger' id='".$donne['id']."' href='#'>Supprimer</a></td>";
             }while ($donne = $liste->fetch());
             echo "</table>";
     }
