@@ -42,6 +42,7 @@
                               <option value="agent">AGENT</option>
                               <option value="gerant">GERANT</option>
                               <option value="admin">ADMIN</option>
+                              <option value="proprietaire">PROPRIÉTAIRE</option>
                             </select>
                         </div>
                         <center>

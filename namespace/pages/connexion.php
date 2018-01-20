@@ -69,6 +69,10 @@
                                                     header('location:gerant.php');
                                                     $_SESSION['gerant'] = "gerant";
                                                 }
+                                                if ($res['profil']=="proprietaire") {
+                                                    header('location:proprietaire.php');
+                                                    $_SESSION['proprietaire'] = "proprietaire";
+                                                }
                                             }else
                                                 echo "<span class='alert alert-secondary'>VEUILLEZ CONTACTER L'ADMINISTRATEUR</span>";
                                         }

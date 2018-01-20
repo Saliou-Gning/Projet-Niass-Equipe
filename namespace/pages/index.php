@@ -372,6 +372,107 @@
 			}
 
 		}
+
+		class contrat{
+
+			private $_id;
+			private $_dateSIGNE;
+			private $_dateDEBUT;
+			private $_dateFIN;
+			private $_montantProp;
+			private $_montantLocation;
+			private $_etat;
+			private $_texte;
+			private $_bien;
+			private $_proprietaire;
+
+			// constructeur de la classe
+
+			public function __construct(array $donnee){
+				if (isset($donnee['id'])) $this->_id = $donnee['id'];
+				if (isset($donnee['dateSIGNE'])) $this->_dateSIGNE = $donnee['dateSIGNE'];
+				if (isset($donnee['dateDEBUT'])) $this->_dateDEBUT = $donnee['dateDEBUT'];
+				if (isset($donnee['dateFIN'])) $this->_dateFIN = $donnee['dateFIN'];
+				if (isset($donnee['montantProp'])) $this->_montantProp = $donnee['montantProp'];
+				if (isset($donnee['montantLocation'])) $this->_montanLocation = $donnee['montantLocation'];
+				if (isset($donnee['etat'])) $this->_etat = $donnee['etat'];
+				if (isset($donnee['texte'])) $this->_texte = $donnee['texte'];
+				if (isset($donnee['bien'])) $this->_bien = $donnee['bien'];
+				if (isset($donnee['proprietaire'])) $this->_proprietaire = $donnee['proprietaire'];
+			}
+
+			// accesseurs de le classe
+
+			public function id(){
+				return $this->_id;
+			}
+
+			public function dateSIGNE(){
+				return $this->_dateSIGNE;
+			}
+
+			public function dateDEBUT(){
+				return $this->_dateDEBUT;
+			}
+
+			public function dateFIN(){
+				return $this->_dateFIN;
+			}
+
+			public function montantProp(){
+				return $this->_montantProp;
+			}
+
+			public function montantLocation(){
+				return $this->_montantLocation;
+			}
+
+			public function etat(){
+				return $this->_etat;
+			}
+
+			public function texte(){
+				return $this->_texte;
+			}
+
+			public function bien(){
+				return $this->_bien;
+			}
+
+			public function proprietaire(){
+				return $this->_proprietaire;
+			}
+		}
+
+		class gestionContrat{
+
+			private $_bdd;
+
+			// constructeur de la classe
+
+			public function __construct(PDO $bdd){
+				$this->_bdd  = $bdd;
+			}
+
+			// ajouter un contrat
+
+			public function add(contrat $c){
+				$sql = $this->_bdd->prepare("INSERT INTO contrat VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				$sql->execute(array(
+					$c->dateSIGNE(),
+					$c->dateDEBUT(),
+					$c->dateFIN(),
+					$c->montantProp(),
+					$c->montantLocation(),
+					1,
+					$c->texte(),
+					$c->bien(),
+					$c->proprietaire()
+				));
+			}
+
+
+		}
 	}
 
 	//Bien et utilisateur à faire pour moi. Ndeye maguette thiane.
