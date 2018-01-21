@@ -25,8 +25,34 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="#">ACCUEIL</a>
                     </li>
+                    <div id="modal">
+                      <!-- Button trigger modal -->
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Mes contrats</a>
+                        <a class="nav-link" href="#" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Mes contrats</a>
+                     
+                      
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">contrat</h4>
+      </div>
+       <?php
+       include 
+       ('ajoutcontrat.php')
+       ?>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+                        </div>
+                      
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Mes biens</a>
@@ -43,4 +69,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 </body>
+
+
 </html>
