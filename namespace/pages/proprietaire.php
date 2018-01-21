@@ -65,9 +65,73 @@
             </div>
         </nav>
     </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
+
+<?php
+
+try
+{
+	// On se connecte à MySQL
+	$bdd = new PDO('mysql:host=localhost;dbname=location;charset=utf8', 'root', 'jnoelndusr25');
+}
+catch(Exception $e)
+{
+	// En cas d'erreur, on affiche un message et on arrête tout
+        die('Erreur : '.$e->getMessage());
+}
+if(isset($_POST['enregistrer']) && isset($_POST['nomproprietaire']) && isset($_POST['nomlocataire']) && isset($_POST['datedebut']) && isset($_POST['datefin']) && isset($_POST['montantloc']) && isset($_POST['idbien']))//ici la fonction if isset et ce qui suit permet de recupérer le login,password,et profil s'ils ont été deja remplis dans la page d'accueil.
+{
+    extract($_POST);
+    $req = $bdd->prepare('INSERT INTO contrat (nomproprietaire,nomlocataire,datedebut,datefin,montantloc,idbien) VALUES(:nomproprietaire,:nomlocataire,:datedebut,:datefin,:montantloc,:idbien)');
+    $req->execute(array(
+      'nomproprietaire'=>$nomproprietaire,
+      'nomlocataire'=>$nomlocataire,
+      'datedebut'=>$datedebut,
+      'datefin'=>$datefin,
+      'montantloc'=>$montantloc,
+      'idbien'=>$idbien
+    ));
+}
+
+?>
+
+
+<h1>Liste des contrats</h1>
+    <?php
+   
+    ?>
+   
+    <table border="1" cellspacing="0" cellpadding="0">
+    <tr>
+        <th>idcontrat </th>
+        <th>nomproprietaire</th>
+        <th>nomlocataire</th>
+        <th>datedebut</th>
+        <th>datefin</th>
+        <th>montantloc</th>
+        <th>idbien</th>
+    </tr>
+   
+      <?php
+      $reponse = $bdd->query('SELECT * FROM contrat');
+        while($donnees = $reponse->fetch()){
+            echo "<tr>
+                    <td>".$donnees['idcontrat']."</td>
+                    <td>".$donnees['nomproprietaire']."</td>     
+                    <td>".$donnees['nomlocataire']."</td>  
+                    <td>".$donnees['datedebut']."</td>
+                    <td>".$donnees['datefin']."</td>   
+                    <td>".$donnees['montantloc']."</td> 
+                    <td>".$donnees['idbien']."</td>          
+                   </tr>";          
+       } 
+       $reponse->closeCursor();        
+    ?>
+     </table>
 </body>
 
 
